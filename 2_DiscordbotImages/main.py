@@ -1,3 +1,7 @@
+# Usage
+# $waifu for waifu pics
+# $cry for crying pics
+
 import discord
 import requests
 import json
@@ -6,10 +10,14 @@ from dotenv import load_dotenv
 
 client = discord.Client()
 
-def get_pic():
+def get_waifu():
     response = requests.get("https://api.waifu.pics/sfw/waifu")
-    data = json.loads(response.text)['url']
-    return data
+    waifu = json.loads(response.text)['url']
+    return waifu
+def get_cry():
+    response = requests.get("https://api.waifu.pics/sfw/cry")
+    cry = json.loads(response.text)['url']
+    return cry
 
 @client.event
 async def on_ready():
@@ -19,9 +27,13 @@ async def on_ready():
 async def on_message(message):
     if message.author == client.user: 
         return
-    if message.content.startswith('$pic'):
-        pic = get_pic()
+    if message.content.startswith('$waifu'):
+        pic = get_waifu()
         await message.channel.send(pic)
+    if message.content.startswith('$cry'):
+        pic = get_cry()
+        await message.channel.send(pic)
+
 load_dotenv()
 client.run(os.getenv('TOKEN'))
 
