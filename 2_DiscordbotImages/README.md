@@ -1,6 +1,7 @@
-# How to run the programme
+# How to run the Bot
 
-### [Youtube]()
+### [Youtube]() 
+* Has not added
 ## Go to [Discord Developer Portal](https://discord.com/developers/applications)
 1. **Create discord bot application**
 ![screenshots](https://github.com/KaungPyaeHtet/DailyPython/blob/master/2_DiscordbotImages/Images/Application.png)
