@@ -76,5 +76,27 @@ your_review_inp.grid(row=9, columnspan=2, sticky='NESW')
 
 submit_btn.grid(row=99)
 show_output.grid(row=100, columnspan=2, sticky='NSEW')
+
+root.columnconfigure(1, weight=1)
+root.rowconfigure(99, weight=2)
+root.rowconfigure(100, weight=1)
+
+# Functions
+def on_submit():
+    name = name_inp.get()
+    hour = hour_inp.get()
+    selected_idx = games_inp.curselection()
+    if selected_idx:
+        game = games_inp.get(selected_idx)
+    else:
+        game = ''
+    review = your_review_inp.get('1.0', tk.END)
+    message = (
+        f"Thanks for taking the Survey, {name}.\n"
+        f"You have invested {hour} hours daily in {game}"
+    )
+    show_output.configure(text=message)
+submit_btn.configure(command=on_submit)
+
 print("Success")
 root.mainloop()
