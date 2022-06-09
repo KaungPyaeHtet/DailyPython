@@ -18,7 +18,10 @@ def get_cry():
     response = requests.get("https://api.waifu.pics/sfw/cry")
     cry = json.loads(response.text)['url']
     return cry
-
+# def get_nsfw():
+#     response = requests.get("https://api.waifu.pics/nsfw/waifu")
+#     nsfw = json.loads(response.text)['url']
+#     return nsfw
 @client.event
 async def on_ready():
     print('Logged on as {0.user}!'.format(client))
@@ -33,7 +36,9 @@ async def on_message(message):
     if message.content.startswith('$cry'):
         pic = get_cry()
         await message.channel.send(pic)
-
+    # if message.content.startswith('$nsfw'):
+    #     pic = get_nsfw()
+    #     await message.channel.send(pic)
 load_dotenv()
 client.run(os.getenv('TOKEN'))
 
