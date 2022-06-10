@@ -81,7 +81,7 @@ your_review_label.grid(row=8, sticky=tk.W)
 your_review_inp.grid(row=9, columnspan=2, sticky='NESW')
 
 submit_btn.grid(row=99)
-show_output.grid(row=100, columnspan=2, sticky='NSEW')
+show_output.grid(row=100, sticky=(tk.W + tk.E))
 
 root.columnconfigure(1, weight=1)
 root.rowconfigure(99, weight=2)
