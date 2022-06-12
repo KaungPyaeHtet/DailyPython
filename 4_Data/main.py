@@ -218,50 +218,37 @@ def on_reset():
         else:
             variable.set("")
     notes_inp.delete('1.0', tk.END)
-reset_button.configure(command=on_reset)
 
-## Hard * Recheck
-# Save Command
 def on_save():
-  """Handle save button clicks"""
-
-  global records_saved
-  # For now, we save to a hardcoded filename with a datestring.
-  # If it doesnt' exist, create it,
-  # otherwise just append to the existing file
-  datestring = datetime.today().strftime("%Y-%m-%d")
-  filename = f"abq_data_record_{datestring}.csv"
-  newfile = not Path(filename).exists()
-
-  # get the data from the variables
-  data = dict()
-  fault = variables['Equipment Failure'].get()
-  for key, variable in variables.items():
-    if fault and key in ('Light', 'Humidity', 'Temperature'):
-      data[key] = ''
-    else:
-      try:
-        data[key] = variable.get()
-      except tk.TclError:
-        status_var.set(
-          f'Error in field: {key}.  Data was not saved!')
-        return
-  # get the Text widget contents separately
-  data['Notes'] = notes_inp.get('1.0', tk.END)
-
-  # Append the record to a CSV
-  with open(filename, 'a', newline='') as fh:
-    csvwriter = csv.DictWriter(fh, fieldnames=data.keys())
-    if newfile:
-      csvwriter.writeheader()
-    csvwriter.writerow(data)
-
-  records_saved += 1
-  status_var.set(
-    f"{records_saved} records saved this session")
-  on_reset()
-
-
+    global records_saved
+    datestring = datetime.today().strftime('%Y-%m-%d')
+    filename = f"kaung_{datestring}.csv"
+    fault = variables['Equipment Failure'].get()
+    newfile = not Path(filename).exists()
+    data = dict()
+    for key, variable in variables.items():
+        if fault and key in ('Humidity', 'Light', 'Temperature'):
+            data[key] = ''
+        else:
+            try:
+                data[key] = variable.get()
+            except tk.TclError:
+                status_var.set(
+                    f"Error in field: {key}"
+                )
+                return
+        data["Note"] = notes_inp.get('1.0', tk.END)
+    with open(filename, 'a', newline='') as fh:
+        csvwriter = csv.DictWriter(fh, fieldnames=data.keys())
+        if newfile:
+            csvwriter.writeheader()
+        csvwriter.writerow(data)
+    records_saved += 1
+    status_var.set(
+        f"{records_saved} records have been saved this session"
+    )
+    on_reset()
+    
 save_button.configure(command=on_save)
 on_reset()
 root.mainloop()
